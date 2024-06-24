@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{css/index-style.css}">
+    <!--adding font awesome icons library-->
+    <script src="https://kit.fontawesome.com/28cbcae3e4.js" crossorigin="anonymous"></script>
+    <title>Nespresso</title>
+</head>
+
+<body>
+    <!--Navbar Section-->
+    <div th:insert="header"></div>
+
+    <!--Hero Section-->
+    <section class="hero">
+        <div class="hero-div">
+            <div class="hero-text">
+                <p class="p1">SUMMER SALE</p>
+                <p class="p2">VERTUO NOW £69</p>​
+                <p class="p3">RRP £99</p>
+                <p class="p3">50 FREE CAPSULES</p>
+                <p class="p3">AND £45 OFF COFFEE WHEN YOU SIGN UP</p>
+                <a href=""><button>Discover More</button></a>
+            </div>
+            <div class="hero-img">
+                <img src="images/sale.png" alt="">
+            </div>
+        </div>
+    </section>
+
+
+    
+    <!--Capsules Section-->
+    <section class="capsules-sec">
+        <div class="capsules-div">
+            <h2>Capsules</h2>
+            <div class="capsules-grid">
+
+                <!-- Fetching capsules products -->
+                    <div th:each="capsuleEntry : ${products.get('Capsules')}" class="capsule">
+                        <div class="capsule-up">
+                            <a th:href="@{product(id=${capsuleEntry.key.id})}">
+                                    <img th:src="@{images/{imageName} (imageName=${capsuleEntry.value})}" alt="">
+                                    <p  th:text="${capsuleEntry.key.name}" class="capsule-name"></p>
+                            </a>
+                        </div>
+                        <div class="capsule-bottom">
+                            <p th:text="${capsuleEntry.key.price}" class="price"></p>
+                            <form method="post">
+                                <input type="hidden" name="qty" value="1">
+                                <input type="hidden" name="id" th:value= "${capsuleEntry.key.id}"></input>
+                                <button type="button" th:id="${capsuleEntry.key.id}" class="add" 
+                                    onclick="addProduct(this.id)">+</button>
+                            </form>
+                        </div>
+                    </div>
+            </div>
+            <a th:href="@{showmore(id=1)}">
+                <button id="1" class="show-more-btn">Show more</button>
+            </a>
+        </div>
+    </section>
+
+
+    <!--Accessories Section-->
+    <section class="capsules-sec">
+        <div class="capsules-div">
+            <h2>Accessories</h2>
+            <div class="capsules-grid">
+
+                <!-- Fetching capsules products -->
+                    <div th:each="accessoryEntry : ${products.get('Accessories')}" class="capsule">
+                        <div class="capsule-up">
+                            <a th:href="@{product(id=${accessoryEntry.key.id})}">
+                                    <img th:src="@{images/{imageName} (imageName=${accessoryEntry.value})}" alt="">
+                                    <p  th:text="${accessoryEntry.key.name}" class="capsule-name"></p>
+                            </a>
+                        </div>
+                        <div class="capsule-bottom">
+                            <p th:text="${accessoryEntry.key.price}" class="price"></p>
+                            <form method="post">
+                                <input type="hidden" name="qty" value="1">
+                                <input type="hidden" name="id" th:value= "${accessoryEntry.key.id}"></input>
+                                <button type="button" th:id="${accessoryEntry.key.id}" class="add" 
+                                    onclick="addProduct(this.id)">+</button>
+                            </form>
+                        </div>
+                    </div>
+            </div>
+            <a th:href="@{showmore(id=2)}">
+                <button class="show-more-btn">Show more</button>
+            </a>
+        </div>
+    </section>
+
+    <!--Coffee Machines Section-->
+    <section class="capsules-sec">
+    <div class="capsules-div">
+            <h2>Coffee Machines</h2>
+            <div class="capsules-grid">
+
+                <!-- Fetching capsules products -->
+                    <div th:each="machineEntry : ${products.get('Machines')}" class="capsule">
+                        <div class="capsule-up">
+                            <a th:href="@{product(id=${machineEntry.key.id})}">
+                                    <img th:src="@{images/{imageName} (imageName=${machineEntry.value})}" alt="">
+                                    <p  th:text="${machineEntry.key.name}" class="capsule-name"></p>
+                            </a>
+                        </div>
+                        <div class="capsule-bottom">
+                            <p th:text="${machineEntry.key.price}" class="price"></p>
+                            <form method="post">
+                                <input type="hidden" name="qty" value="1">
+                                <input type="hidden" name="id" th:value= "${machineEntry.key.id}"></input>
+                                <button type="button" th:id="${machineEntry.key.id}" class="add" 
+                                    onclick="addProduct(this.id)">+</button>
+                            </form>
+                        </div>
+                    </div>
+            </div>
+            <a th:href="@{showmore(id=3)}">
+                <button type="button" class="show-more-btn">Show more</button>
+            </a>
+        </div>
+    </section>
+
+
+    <!--Footer-->
+    <footer>
+        <div class="footer-div">
+            <a href="">About us</a>
+            <p>|</p>
+            <a href="">Contact us</a>
+            <p>|</p>
+            <a href="">FAQs</a>
+            <p>|</p>
+        </div>
+    </footer>
+</body>
+</html>
+
+
+<script >
+   
+    function addProduct(buttonId){
+
+        // handle clicking the form button by sending request to the server
+        req = new XMLHttpRequest();
+        req.open("POST","/productadd",true);
+        req.onreadystatechange = updateQty;
+
+        // Create a form object to send
+        addForm = document.getElementById(buttonId).parentElement;
+        formData = new FormData(addForm);
+
+        // Send form
+        req.send(formData);
+    }
+
+    // Update cart quantity number in the page
+    function updateQty(){
+        var qtyNum = document.getElementById("qty");
+        qtyNum.innerHTML = req.responseText;
+
+    }
+
+</script>

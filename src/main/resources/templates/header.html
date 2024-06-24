@@ -1,0 +1,75 @@
+
+<html>
+<!--Navbar Section-->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">
+                <a th:href="@{/}">
+                    <img src="images/Nespresso.png" alt="">
+                </a>
+            </div>
+
+            <ul>
+                <li class="li-signin">
+
+                    <!-- If logged in, make the li as a button droplist with sign out option -->
+                    <button th:if="${session.loggedin != null}" class="signin-button"
+                        onclick="signin_droplist()">
+                        <div class="nav-box nav-box-signin">
+                            <i class="fa-regular fa-user nav-box-signin-icon"></i>
+                            <span th:text="${session.user.firstName}" class="nav-box-text nav-box-signin-text">
+                            </span>
+                        </div>
+                    </button>
+                        
+                    <!-- IF not logged in, make the li as a link to sign in page -->
+                    <a th:unless="${session.loggedin != null}" th:href="@{/loginpage}" class="nav-link">
+                        <div class="nav-box nav-box-signin">
+                            <i class="fa-regular fa-user nav-box-signin-icon"></i>
+                            <span class="nav-box-text nav-box-signin-text">
+                                Sign in
+                            </span>
+                        </div>
+                    </a>
+
+                    <!-- Make dropdown orders and signout if logged in -->
+                    <ul id = "dropdown" class="dropdown">
+                        <li>
+                            <a th:href="@{/previousorders}">Orders</a>
+                        </li>
+                        <li>
+                            <form th:action="@{/logout}" method="post">
+                                <button type="submit" style="background-color: transparent; border: none;
+                                    font-size: medium; cursor: pointer;">
+                                    Logout
+                                </button>
+                                <!-- <input type="submit" value="Logout"> -->
+                            </form>
+                            <!-- <a th:href="@{/logout}">Sign out</a> -->
+                        </li>
+                    </ul>
+
+                </li>
+                <li>
+                    <a th:href="@{/cart}" class="nav-link">
+                        <div class="nav-box nav-box-cart">
+                            <i class="fa-solid fa-cart-shopping"></i>
+                            <p class="nav-box-cart-text">SHOPPING CART</p>
+                            <p th:text="'(' + ${session.qty} + ')'" class="quantity" id="qty">()</p>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!-- End of nav section -->
+
+    <script>
+        /* When the user clicks on his account button, 
+        toggle between hiding and showing the signout dropdown content */
+        function signin_droplist() {
+          document.getElementById("dropdown").classList.toggle("dropdown_show");
+        }
+    </script>
+</html>
+

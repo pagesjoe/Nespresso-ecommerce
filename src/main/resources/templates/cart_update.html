@@ -1,0 +1,84 @@
+   <!--Navbar Section-->
+   <div th:insert="header"></div>                 
+    
+   <!-- Cart Section -->
+   <section class="cart-sec">
+       <div class="cart-div">
+           
+           <table class="cart-table">
+               <tr class="table-header">
+                   <th>Item</th>
+                   <th>Quantity</th>
+                   <th>Subtotal</th>
+               </tr>
+
+               <!-- If cart qty is 0 -->
+               <tr th:if="${session.qty == 0}"><td><br>You have no products in the cart<br><br></td></tr>
+
+
+               <!-- Start loading cart products if qty>0 -->
+                <div th:unless="${session.qty == 0}">
+
+                   <!-- looping in cart products -->
+                   <tr th:each="productEntry : ${session.cart}">
+                       <!-- Cart Item -->
+                       <td>
+                           <div class="cart-item">
+                               <img th:src="@{images/{imageName} (imageName=${productEntry.key.images.get(0).name})}" alt="">
+                               <div class="cart-item-details">
+                                   <!-- <p><?php echo $id?></p> -->
+                                   <p th:text="${productEntry.key.name}"></p>
+                                   <p th:text="${productEntry.key.price}"></p>
+                               </div>
+
+                               <!-- Remove cart item -->
+                               <form method="post">
+                                   <input type="hidden" name="action" value="remove">
+                                   <input type="hidden" name="qty" value="0">
+                                   <input type="hidden" name="id" th:value= "${productEntry.key.id}"></input>
+                                   <button type="button" th:value="${productEntry.key.id}"
+                                       class="remove" th:id="${productEntry.key.id} + 'remove'" 
+                                       onclick="cartAjax(this.id)">
+                                       X
+                                   </button>
+                               </form>
+                           </div>
+                       </td>
+
+                       <!-- UPdate Cart Item -->
+                       <td>
+                           <form method="post" >
+                               <input type="hidden" name="action" value="update">
+                               <input class="qty" type="number" name="qty" 
+                                   th:value="${productEntry.value}" min="1">
+                               <input type="hidden" name="id" th:value="${productEntry.key.id}">
+                               <button class="update" type="button" th:id="${productEntry.key.id} + 'update'" 
+                                   onclick="cartAjax(this.id)">
+                                   Update
+                               </button>
+                           </form>
+                       </td>
+
+                       <!-- Cart Item sub total price -->
+                       <td th:text="${productEntry.key.price * productEntry.value}">
+                           
+                       </td>
+                   </tr>
+
+                </div>
+              
+           </table>
+
+            <!-- Total Section -->
+            <div th:if="${session.qty != 0}" class="total">
+                <p class="total-text">Total</p>
+                <p th:text="${session.total}" class="total-number"></p>
+            </div>
+
+            <!-- Checkout Section -->
+            <a th:if="${session.qty != 0}" th:href="@{/checkout}" class="checkout-link">
+                <button class="checkout-btn">Confirm Checkout</button>
+            </a>
+           
+       </div>
+   </section>

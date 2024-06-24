@@ -1,0 +1,85 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{css/showmore-style.css}">
+    <!--adding font awesome icons library-->
+    <script src="https://kit.fontawesome.com/28cbcae3e4.js" crossorigin="anonymous"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <!--Navbar Section-->
+    <div th:insert="header"></div>
+
+    
+    <!-- Products Section -->
+    <section class="capsules-sec">
+        <div class="capsules-div">
+
+            <h2 th:text="${category.name}"></h2>
+
+            <div class="capsules-grid">
+               
+                    <div th:each="productEntry : ${products}" class="capsule">
+                        <div class="capsule-up">
+                            <a th:href="@{product(id=${productEntry.key.id})}">
+                                    <img th:src="@{images/{imagename} (imagename = ${productEntry.value})}">
+                                    <p th:text="${productEntry.key.name}" class="capsule-name"></p>
+                            </a>
+                        </div>
+                        <div class="capsule-bottom">
+                            <p th:text="${productEntry.key.price}" class="price"></p>
+                            <form method="post">
+                                <input type="hidden" name="qty" value="1">
+                                <input type="hidden" name="id" th:value="${productEntry.key.id}"></input>
+                                <button type="button" th:id="${productEntry.key.id}" class="add" 
+                                    onclick="addProduct(this.id)">+</button>
+                            </form>
+                        </div>
+                    </div>
+         
+            </div>
+        </div>
+    </section>
+
+    <!--Footer-->
+    <footer>
+        <div class="footer-div">
+            <a href="">About us</a>
+            <p>|</p>
+            <a href="">Contact us</a>
+            <p>|</p>
+            <a href="">FAQs</a>
+        </div>
+    </footer>
+</body>
+</html>
+
+<script>
+   
+    function addProduct(buttonId){
+
+        // handle clicking the form button by sending request to the server
+        req = new XMLHttpRequest();
+        req.open("POST","/productadd",true);
+        req.onreadystatechange = updateQty;
+
+        // Create a form object to send
+        addForm = document.getElementById(buttonId).parentElement;
+        formData = new FormData(addForm);
+
+        // Send form
+        req.send(formData);
+    }
+
+    // Update cart quantity number in the page
+    function updateQty(){
+        var qtyNum = document.getElementById("qty");
+        qtyNum.innerHTML = req.responseText;
+
+    }
+</script>
+

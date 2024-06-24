@@ -1,0 +1,53 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/orders.css">
+    <!--adding font awesome icons library-->
+    <script src="https://kit.fontawesome.com/28cbcae3e4.js" crossorigin="anonymous"></script>
+    <title>Previous Orders</title>
+</head>
+<body>
+    <!--Navbar Section-->
+    <div th:insert="header"></div>
+    
+    <!--Orders Section-->
+    <section class="orders-sec">
+    
+        <!-- Order Div -->
+        <div th:each="orderEntry : ${orders}" class="order">
+
+            <div class="order-details">
+                <div class="order-date">
+                    <p>Order Date</p>
+                    <p th:text="${orderEntry.key.date}"></p>
+                </div>
+                <div class="order-date">
+                    <p>TOTAL</p>
+                    <p th:text="${orderEntry.key.price}"></p>
+                </div>
+                <div class="order-date">
+                    <p><p>Oder#</p></p>
+                    <p th:text="${orderEntry.key.id}"></p>
+                </div>
+            </div>
+
+            <!-- Product Div -->
+            <div th:each="productEntry : ${orderEntry.value}" class="products">
+            
+                <!-- Product details -->
+                <div class="product">
+                    <img th:src="@{images/{imagename} (imagename=${productEntry.value[0]})}" alt="">
+                    <p name="quantity" th:text="'(' + ${productEntry.value[1]} + 'x) '"></p>
+                    <p name="name" th:text="${productEntry.key.name}"></p>
+                    <br>
+                </div>
+                  
+            </div>
+        </div>
+
+    </section>
+</body>
+</html>
