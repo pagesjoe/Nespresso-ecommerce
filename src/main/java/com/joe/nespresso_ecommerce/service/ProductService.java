@@ -30,7 +30,7 @@ public class ProductService {
         Category category = categoryRepository.findById(categoryId).get();
 
         //Finding products by category
-        List<Product> products = productRepository.findByCategory(category);
+        List<Product> products = category.getProducts();
 
         //Creating return hashmap
         HashMap<Product, String> productimageHash = new HashMap<>();
@@ -59,16 +59,8 @@ public class ProductService {
             //Getting the category first 8 products
             List<Product> categoryProductsList = this.getfirst8ProductsByCategoryId(i);
 
-            //Creating hashmap between the product and corresponding image name
-            HashMap<Product, String> productImageHash = new HashMap<>();
-
-            //Looping on the products list and
-            //Setting image name for every product
-            for(Product product : categoryProductsList){
-                //Getting image name of the product thumbnail image
-                String imageName = product.getImages().get(0).getName();
-                productImageHash.put(product, imageName);
-            }
+            //Creating hashmap between the products and corresponding image name
+            HashMap<Product, String> productImageHash = setProductImageHash(categoryProductsList);
 
             //Putting the productImageHash in the products Hashmap
             String categoryName = categoryRepository.findById(i).get().getName();
@@ -76,10 +68,26 @@ public class ProductService {
         }
 
         return products;
-        
     }
 
 
+
+    //Set the corresponding imagename for every product and put them in  a hashmap
+    public HashMap<Product, String> setProductImageHash(List<Product> categoryProductsList){
+        //Creating hashmap between the product and corresponding image name
+        HashMap<Product, String> productImageHash = new HashMap<>();
+
+        //Looping on the products list and
+        //Setting image name for every product
+        for(Product product : categoryProductsList){
+            
+            //Getting image name of the product thumbnail image
+            String imageName = product.getImages().get(0).getName();
+            productImageHash.put(product, imageName);
+        }
+
+        return productImageHash;
+    }
 
     //Get first 8 products from a category
     public List<Product> getfirst8ProductsByCategoryId(int categoryId) {
