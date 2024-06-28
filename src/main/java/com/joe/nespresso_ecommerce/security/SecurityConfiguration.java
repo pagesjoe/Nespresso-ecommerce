@@ -44,7 +44,7 @@ public class SecurityConfiguration {
         return http.build();
     }
 
-    //Configuring the JDBC userDetails Manager
+    //Configuring the userDetails Manager to use JdbcUserDetailsManager
     @Bean
     public UserDetailsManager userDetailsManager(DataSource dataSource){
          return new JdbcUserDetailsManager(dataSource);
@@ -53,7 +53,7 @@ public class SecurityConfiguration {
 
 
 
-    //Creating a bean of BcryptPasswordEncoder to use to encode passwords
+    //Creating a Bean of BcryptPasswordEncoder to use it to encode passwords
     @Bean
 	public BCryptPasswordEncoder bCryptPasswordEncoder() {
 		return new BCryptPasswordEncoder();

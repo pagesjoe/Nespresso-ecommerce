@@ -40,6 +40,7 @@ public class ProductService {
             
             String imagename = product.getImages().get(0).getName();
 
+            // putting product and corresponding imagename to the hashmap
             productimageHash.put(product, imagename);
         }
 
@@ -80,7 +81,7 @@ public class ProductService {
         //Looping on the products list and
         //Setting image name for every product
         for(Product product : categoryProductsList){
-            
+
             //Getting image name of the product thumbnail image
             String imageName = product.getImages().get(0).getName();
             productImageHash.put(product, imageName);

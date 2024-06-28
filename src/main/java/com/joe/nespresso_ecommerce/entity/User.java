@@ -2,6 +2,8 @@ package com.joe.nespresso_ecommerce.entity;
 
 import java.util.List;
 
+import com.joe.nespresso_ecommerce.validation.Name;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -15,23 +17,25 @@ import jakarta.validation.constraints.NotEmpty;
 public class User {
 
     @Id
-    @NotEmpty(message = "username cannot be empty")
+    @NotBlank(message = "username cannot be empty")
     private String username;
 
     private int id;
 
-    @NotEmpty(message = "first name cannot be empty")
+    @NotBlank(message = "first name cannot be empty")
+    @Name(message = "First name cannot contain special characters")
     @Column(name = "first_name")
     private String firstName;
 
-    @NotEmpty(message = "last name cannot be empty")
+    @NotBlank(message = "last name cannot be empty")
+    @Name(message = "Last name cannot contain special characters")
     @Column(name = "last_name")
     private String lastName;
 
-    @NotEmpty(message = "email cannot be empty")
+    @NotBlank(message = "email cannot be empty")
     private String email;
 
-    @NotEmpty(message = "password cannot be empty")
+    @NotBlank(message = "password cannot be empty")
     private String password;
 
     private boolean enabled;
