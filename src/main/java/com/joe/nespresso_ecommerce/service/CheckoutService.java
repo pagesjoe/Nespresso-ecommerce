@@ -55,6 +55,8 @@ public class CheckoutService {
 
         session.setAttribute("cart", null);
         session.setAttribute("qty", 0);
+        float total = 0;
+        session.setAttribute("total", total);
 
     }
 }

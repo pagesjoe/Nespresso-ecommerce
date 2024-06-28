@@ -87,9 +87,9 @@
                 </div>
 
                 <!-- Checkout Section -->
-                <a th:if="${session.qty != 0}" th:href="@{/checkout}" class="checkout-link">
-                    <button class="checkout-btn">Confirm Checkout</button>
-                </a>
+                <form th:if="${session.qty != 0}" th:action="@{/checkout}" method="post" class="checkout-link">
+                    <button type="submit" class="checkout-btn">Confirm Checkout</button>
+                </form>
             
         </div>
     </section>

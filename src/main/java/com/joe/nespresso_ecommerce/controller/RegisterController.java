@@ -11,6 +11,7 @@ import com.joe.nespresso_ecommerce.entity.User;
 import com.joe.nespresso_ecommerce.service.AuthorityService;
 import com.joe.nespresso_ecommerce.service.UserService;
 
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,7 +29,12 @@ public class RegisterController {
     AuthorityService authorityService;
 
     @GetMapping("/register")
-    public String getRegisterForm(Model model) {
+    public String getRegisterForm(Model model, HttpSession session) {
+
+         //If user is logged in
+         if(session.getAttribute("user") != null){
+            return "redirect:";
+        }
 
         User user = new User();
         model.addAttribute("user", user);
