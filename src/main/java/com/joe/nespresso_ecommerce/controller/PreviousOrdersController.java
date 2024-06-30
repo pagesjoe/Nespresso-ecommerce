@@ -25,7 +25,6 @@ public class PreviousOrdersController {
             return "redirect:";
         }
     
-
         model.addAttribute("orders", previousOrdersService.getPreviousOrders(session));
         return "previous_orders";
     }

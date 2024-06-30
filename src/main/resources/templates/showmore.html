@@ -31,12 +31,13 @@
                             </a>
                         </div>
                         <div class="capsule-bottom">
-                            <p th:text="${productEntry.key.price}" class="price"></p>
-                            <form method="post">
+                            <p th:text="${#numbers.formatDecimal(productEntry.key.price, 1, 2)}" class="price"></p>
+                            <form method="post" style="position: relative; margin-top: 10px;">
                                 <input type="hidden" name="qty" value="1">
                                 <input type="hidden" name="id" th:value="${productEntry.key.id}"></input>
                                 <button type="button" th:id="${productEntry.key.id}" class="add" 
                                     onclick="addProduct(this.id)">+</button>
+                                <span class="badge" th:id="badge + ${productEntry.key.id}">0</span>
                             </form>
                         </div>
                     </div>
@@ -58,10 +59,11 @@
 </body>
 </html>
 
-<script>
+<script >
    
     function addProduct(buttonId){
-
+        button = document.getElementById("badge" + buttonId);
+        id = buttonId;
         // handle clicking the form button by sending request to the server
         req = new XMLHttpRequest();
         req.open("POST","/productadd",true);
@@ -77,9 +79,35 @@
 
     // Update cart quantity number in the page
     function updateQty(){
-        var qtyNum = document.getElementById("qty");
-        qtyNum.innerHTML = req.responseText;
+        if (req.readyState == 4 && req.status == 200){
+            var qtyNum = document.getElementById("qty");
+            qtyNum.innerHTML = '(' + req.responseText + ')';
 
+            updateBadge();
+        }
+        
+    }
+
+    //Send request to get badge quantity
+    function updateBadge(){
+        // button = document.getElementById("badge" + id);
+        // handle clicking the form button by sending request to the server
+        req = new XMLHttpRequest();
+        req.open("Post","/updateBadge",true);
+        req.onreadystatechange = setBadge;
+
+        // Create a form object to send
+        formData = new FormData();
+        formData.set("id", id);
+
+        // Send form
+        req.send(formData);
+    }
+
+    //Receive the badge quantity
+    function setBadge(){
+        button.innerHTML = req.responseText;
+        button.style.visibility = 'visible';
     }
 </script>
 

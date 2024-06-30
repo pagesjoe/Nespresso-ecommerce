@@ -23,7 +23,7 @@ public class Product {
 
     private String details;
 
-    private float price;
+    private double price;
 
     @ManyToOne
     @JoinColumn(name = "category_id")
@@ -70,11 +70,11 @@ public class Product {
         this.details = details;
     }
 
-    public float getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 

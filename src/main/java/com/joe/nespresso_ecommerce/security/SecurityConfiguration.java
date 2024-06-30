@@ -22,7 +22,7 @@ public class SecurityConfiguration {
 
         http
             .csrf(request -> request
-                .ignoringRequestMatchers("/productadd", "/cartupdate")
+                .ignoringRequestMatchers("/productadd", "/cartupdate", "updateBadge")
             )
             .authorizeHttpRequests(configurer -> configurer
                 .requestMatchers("/**").permitAll()

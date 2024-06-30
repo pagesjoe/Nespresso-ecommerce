@@ -55,17 +55,14 @@ public class CartService {
 
         }
 
-        
         //Update the session total attribute
-        float subTotal = product.getPrice() * qty;
+        double subTotal = product.getPrice() * qty;
         //If total attribute is created
         if(session.getAttribute("total") != null){
-            System.out.println("set" + subTotal);
-            float newTotal = ((float)session.getAttribute("total") + subTotal);
+            double newTotal = (double)session.getAttribute("total") + subTotal;
             session.setAttribute("total", newTotal);
         }else{
             //If not, create the total attribute
-            System.out.println("not set" + subTotal);
             session.setAttribute("total", subTotal);
         }
 
@@ -73,17 +70,7 @@ public class CartService {
     }
 
 
-    //If the added product is in the cart
-    public boolean productIsInCart(int productId, HashMap<Product, Integer> cart){
-        for(Product theProduct: cart.keySet()){
-            if(theProduct.getId() == productId){
-                return true;
-            }
-        }
-        return false;
-    }
-
-
+    
     public void remove(int id, HttpSession session) {
         //Get the cart
         HashMap<Product, Integer> cart = (HashMap<Product, Integer>) session.getAttribute("cart");
@@ -102,8 +89,8 @@ public class CartService {
         session.setAttribute("qty", newQty);
 
         //Update the total
-        float subTotal = productQty * product.getPrice();
-        float newTotal = (float)session.getAttribute("total") - subTotal;
+        double subTotal = productQty * product.getPrice();
+        double newTotal = (double)session.getAttribute("total") - subTotal;
         session.setAttribute("total", newTotal);
     }
 
@@ -126,10 +113,36 @@ public class CartService {
         session.setAttribute("qty", newCartQty);
 
         //Update the total
-        float oldSubTotal = oldProductQty * product.getPrice();
-        float newSubTotal = newProductQty * product.getPrice();
-        float newTotal = (float)session.getAttribute("total") + newSubTotal - oldSubTotal;
+        double oldSubTotal = oldProductQty * product.getPrice();
+        double newSubTotal = newProductQty * product.getPrice();
+        double newTotal = (double)session.getAttribute("total") + newSubTotal - oldSubTotal;
         session.setAttribute("total", newTotal);
     }
+
+
+    public int getProductQuantity(int id, HttpSession session) {
+        //Get the cart
+        HashMap<Product, Integer> cart = (HashMap<Product, Integer>) session.getAttribute("cart");
+
+        //If product is not in the cart
+        if(cart == null || !productIsInCart(id, cart)){
+            return 1;
+        }
+        //Else, Return product value in the cart
+        return cart.get(productService.findById(id));
+    }
     
+
+
+    //If the added product is in the cart
+    public boolean productIsInCart(int productId, HashMap<Product, Integer> cart){
+        for(Product theProduct: cart.keySet()){
+            if(theProduct.getId() == productId){
+                return true;
+            }
+        }
+        return false;
+    }
+
+
 }

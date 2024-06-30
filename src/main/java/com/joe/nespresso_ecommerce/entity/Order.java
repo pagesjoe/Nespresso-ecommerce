@@ -25,7 +25,7 @@ public class Order {
 
     private java.sql.Date date;
 
-    private float price;
+    private double price;
 
     @Column(name = "no_items")
     private int numOfItems;
@@ -60,11 +60,11 @@ public class Order {
         this.date = date;
     }
 
-    public float getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(float price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 

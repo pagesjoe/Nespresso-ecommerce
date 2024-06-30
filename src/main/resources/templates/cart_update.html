@@ -28,7 +28,7 @@
                                <div class="cart-item-details">
                                    <!-- <p><?php echo $id?></p> -->
                                    <p th:text="${productEntry.key.name}"></p>
-                                   <p th:text="${productEntry.key.price}"></p>
+                                   <p th:text="${#numbers.formatDecimal(productEntry.key.price, 1, 2)}"></p>
                                </div>
 
                                <!-- Remove cart item -->
@@ -60,7 +60,7 @@
                        </td>
 
                        <!-- Cart Item sub total price -->
-                       <td th:text="${productEntry.key.price * productEntry.value}">
+                       <td th:text="${#numbers.formatDecimal((productEntry.key.price * productEntry.value), 1, 2)}">
                            
                        </td>
                    </tr>
@@ -72,7 +72,7 @@
             <!-- Total Section -->
             <div th:if="${session.qty != 0}" class="total">
                 <p class="total-text">Total</p>
-                <p th:text="${session.total}" class="total-number"></p>
+                <p th:text="${#numbers.formatDecimal(session.total, 1, 2)}" class="total-number"></p>
             </div>
 
             <!-- Checkout Section -->

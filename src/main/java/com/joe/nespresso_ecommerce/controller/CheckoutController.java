@@ -29,8 +29,13 @@ public class CheckoutController {
         }
     }
 
+
     @GetMapping("checkout")
-    public String getcheckout() {
+    public String getcheckout(HttpSession session) {
+        //If user is not logged in
+        if(session.getAttribute("user") == null){
+            return "login_form";
+        }
         return "checkout";
     }
 }

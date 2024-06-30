@@ -12,6 +12,7 @@ public class LoginController {
 
     @GetMapping("/loginpage")
     public String getLoginForm(HttpSession session) {
+        //If user is already logged in
         if(session.getAttribute("user") != null){
             return "redirect:";
         }

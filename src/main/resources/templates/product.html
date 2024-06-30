@@ -23,7 +23,7 @@
             <div class="details">
                 <h2 th:text="${product.name}"></h2>
                 <p th:text="${product.details}"></p>
-                <p th:text="${product.name}" class="price"></p>
+                <p th:text="${#numbers.formatDecimal(product.price, 1, 2)}" class="price"></p>
                 <div class="addform">
                     <form method="post" id="addProductForm">
                         <input type="number" name="qty" value="1" class="qty">

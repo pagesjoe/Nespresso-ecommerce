@@ -26,7 +26,7 @@
                 </div>
                 <div class="order-date">
                     <p>TOTAL</p>
-                    <p th:text="${orderEntry.key.price}"></p>
+                    <p th:text="${#numbers.formatDecimal(orderEntry.key.price, 1, 2)}"></p>
                 </div>
                 <div class="order-date">
                     <p><p>Oder#</p></p>

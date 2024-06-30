@@ -32,6 +32,7 @@ public class CartController {
 
 
 
+
     //Updating the cart when pressing the add button
     @PostMapping("/productadd")
     public ResponseEntity<String> productAdd(@RequestParam int qty, @RequestParam int id, HttpSession session,
@@ -41,9 +42,21 @@ public class CartController {
         int newQty = cartService.addToCart(qty, id, session);
 
         //Return response with new cart quantity
-        String response = "(" + newQty + ")";
+        String response = Integer.toString(newQty);
         return new ResponseEntity<String>(response, HttpStatus.OK);
     }
+
+
+
+
+    //Update the badge number when pressing the add button
+    @PostMapping("/updateBadge")
+    public ResponseEntity<String> postMethodName(@RequestParam int id, HttpSession session) {
+        int badgeNumber = cartService.getProductQuantity(id, session);
+
+        return new ResponseEntity<String>(Integer.toString(badgeNumber), HttpStatus.OK);
+    }
+    
 
 
 
@@ -53,7 +66,6 @@ public class CartController {
     public String updateCart(@RequestParam String action, @RequestParam int qty, @RequestParam int id,
         HttpSession session) {
         
-            System.out.println(action);
         if(action.equals("remove")){
             cartService.remove(id, session);
         }else{

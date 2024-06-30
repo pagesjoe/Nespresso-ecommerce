@@ -33,7 +33,7 @@ public class CheckoutService {
         Date date = new Date();
         order.setDate(new java.sql.Date(date.getTime()));
         order.setNumOfItems((Integer)session.getAttribute("qty"));
-        order.setPrice((float)session.getAttribute("total"));
+        order.setPrice((double)session.getAttribute("total"));
         order.setUser((User) session.getAttribute("user"));
 
         //Save the order
@@ -55,7 +55,7 @@ public class CheckoutService {
 
         session.setAttribute("cart", null);
         session.setAttribute("qty", 0);
-        float total = 0;
+        double total = 0;
         session.setAttribute("total", total);
 
     }
