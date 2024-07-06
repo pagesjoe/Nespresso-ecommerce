@@ -69,8 +69,10 @@
 
     // Update cart quantity number in the page
     function updateQty(){
-        var qtyNum = document.getElementById("qty");
-        qtyNum.innerHTML = req.responseText;
+        if (req.readyState == 4 && req.status == 200){
+            var qtyNum = document.getElementById("qty");
+            qtyNum.innerHTML = '(' + req.responseText + ')';
+        }
     }
 
 </script>

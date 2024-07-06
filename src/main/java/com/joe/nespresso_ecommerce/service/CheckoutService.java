@@ -26,6 +26,8 @@ public class CheckoutService {
     @Autowired
     ProductOrderService productOderService;
 
+
+    
     public void checkout(HttpSession session){
 
         //Create new order

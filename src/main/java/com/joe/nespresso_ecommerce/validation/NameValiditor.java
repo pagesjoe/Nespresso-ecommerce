@@ -9,8 +9,8 @@ import jakarta.validation.ConstraintValidatorContext;
 public class NameValiditor implements ConstraintValidator<Name, String>{
 
     @Override
-    public boolean isValid(String name, ConstraintValidatorContext conntext) {
-        Pattern pattern = Pattern.compile("[^a-z]", Pattern.CASE_INSENSITIVE);
+    public boolean isValid(String name, ConstraintValidatorContext context) {
+        Pattern pattern = Pattern.compile("[^a-z ]", Pattern.CASE_INSENSITIVE);
         Matcher matcher = pattern.matcher(name);
         return !matcher.find();
     }

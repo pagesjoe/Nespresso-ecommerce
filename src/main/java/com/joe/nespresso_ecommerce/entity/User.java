@@ -2,6 +2,7 @@ package com.joe.nespresso_ecommerce.entity;
 
 import java.util.List;
 
+import com.joe.nespresso_ecommerce.validation.Email;
 import com.joe.nespresso_ecommerce.validation.Name;
 
 import jakarta.persistence.Column;
@@ -33,6 +34,7 @@ public class User {
     private String lastName;
 
     @NotBlank(message = "email cannot be empty")
+    @Email(message = "Invalid Email")
     private String email;
 
     @NotBlank(message = "password cannot be empty")

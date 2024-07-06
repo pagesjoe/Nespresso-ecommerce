@@ -21,7 +21,7 @@ public class PreviousOrdersService {
     OrderService orderService;
 
     @Autowired
-    ProductOrderService productOderService;
+    ProductOrderService productOrderService;
 
     @Autowired
     ProductService productService;
@@ -40,7 +40,7 @@ public class PreviousOrdersService {
         //getting products per orderid
         for(Order order : orders){
 
-            List<ProductOrder> productOrders = productOderService.getByOrderId(order.getId());
+            List<ProductOrder> productOrders = productOrderService.getByOrderId(order.getId());
 
             //Creating every order list of products
             HashMap<Product, List<String>> products = new HashMap<>();
